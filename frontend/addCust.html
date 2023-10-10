@@ -1,0 +1,196 @@
+<!--
+Class: DAAA/FT/1B/04
+Admission Number: P2237871
+Name: Ashley Bai 
+-->
+
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            if (!localStorage["token"]) {
+                alert("Please login!");
+                window.location.href = "login.html";
+            }
+
+            $("#btn_logout").click(function (event) {
+                event.preventDefault();
+                delete localStorage["token"];
+                window.location.href = "login.html";
+            })
+
+            $("#btn_update").click((event) => {
+                event.preventDefault();
+
+                var settings = {
+                    "url": "http://localhost:3000/customers",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Authorization": "Bearer " + localStorage["token"],
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify({
+                        "store_id": $("#storeId").val(),
+                        "first_name": $("#firstname").val(),
+                        "last_name": $("#lastname").val(),
+                        "email": $("#email").val(),
+                        "address": $('#add1').val(),
+                        "address2": $('#add2').val(),
+                        "district": $('#district').val(),
+                        "city_id": $('#cityId').val(),
+                        "postal_code": $('#postalCode').val(),
+                        "phone": $('#phone').val()
+                    }),
+
+                };
+
+                $.ajax(settings)
+                    .done(function (response) {
+                        console.log(response);
+                        alert("Customer successfully added.");
+                        window.location.href = "profile.html";
+                    })
+                    .fail((response) => {
+                        $("#span_error").html("Error occured, customer unsuccesfully added.")
+                    })
+            })
+        })
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family:'Courier New', Courier, monospace;
+        }
+
+        #span_error {
+            font-weight: 800;
+            color: black;
+        }
+
+        #btn_update,
+        input[type=reset] {
+            width: 43%;
+        }
+
+        #btn_logout {
+            width: 85%;
+        }
+
+        select {
+            width: 180px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="col-lg-6 col-10 mx-auto">
+        <form>
+            <h2 class="text-center mb-4">Add a New Customer</h2>
+
+            <h6>Fill up customer details:</h6>
+
+            <label class="ms-5 mb-3">Store ID:</label>
+            <input id="storeId" placeholder="Enter Store ID" required>
+
+            <label class="ms-5 mb-3">First Name:</label>
+            <input id="firstname" placeholder="Enter First Name" required>
+
+            <label class="ms-5 mb-3">Last Name:</label>
+            <input id="lastname" placeholder="Enter Last Name" required>
+
+            <label class="ms-5 mb-3">Email Address:</label>
+            <input id="email" placeholder="Enter Email" required>
+
+            <label class="ms-5 mb-3">Address 1:</label>
+            <input id="add1" placeholder="Enter Address Line 1" required>
+
+            <label class="ms-5 mb-3">Address 2:</label>
+            <input id="add2" placeholder="Enter Address Line 2" required>
+
+            <br>
+            <label class="ms-5 mb-3">District:</label>
+            <input id="district" placeholder="Enter District" required>
+            <br>
+            <label class="ms-5 mb-3">City ID:</label>
+            <input id="cityId" placeholder="Enter City ID" required>
+            <br>
+            <label class="ms-5 mb-3">Postal Code:</label>
+            <input id="postalCode" placeholder="Postal Code" required>
+            <br>
+            <label class="ms-5 mb-3">Phone Number:</label>
+            <input id="phone" placeholder="Enter Phone Number" required>
+
+
+            <div class="col-lg-4 col-md-10 col-8 mx-auto">
+                <button type="submit" id="btn_update">Submit</button>
+            </div>
+
+            <span id="span_error"></span>
+    </div>
+    </form>
+
+    </div>
+
+
+    <span id="span_error"></span>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <form>
+    <table>
+        <td>Store Id:</td>
+        </tr>
+        <tr>
+            <td><input type="number" id="storeId"></td>
+        </tr>
+        <td>First Name:</td>
+        </tr>
+        <tr>
+            <td><input type="text" id="first_name"></td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+        </tr>
+        <tr>
+            <td><input type="text" id="last_name"></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+        </tr>
+        <tr>
+            <td><input type="email" id="email"></td>
+        </tr>
+        <tr>
+            <td>
+                <select id="select_role" disabled>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" id="btn_update" value="Add"><input type="reset"></td>
+        </tr>
+        <tr>
+            <td><button id="btn_logout">LOGOUT</button></td>
+        </tr>
+    </table>
+</form> -->

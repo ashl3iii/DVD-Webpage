@@ -1,0 +1,124 @@
+<!--
+Class: DAAA/FT/1B/04
+Admission Number: P2237871
+Name: Ashley Bai 
+-->
+
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+    <script>
+        var filmID = + window.location.href.split("?id=")[1]
+        $(function () {
+            window.onload = (event) => { }
+            var settings = {
+                "url": "http://localhost:3000/actorDetails/" + filmID,
+                "method": "GET",
+                "timeout": 0,
+            };
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                for (var i = 0; i < response.length; i++) {
+                    $("#Actor").append(
+                        '<tr><td>' + response[i].first_name + " " + response[i].last_name + "</td></tr>"
+                    )
+                }
+            });
+        })
+    </script>
+
+    <script>
+        $(function () {
+            if (!localStorage["token"]) {
+                alert("Please login!");
+                window.location.href = "login.html";
+            }
+
+            var filmId = + window.location.href.split("?id=")[1];
+
+            var settings = {
+                "url": "http://localhost:3000/dvd/searchDetails/" + filmId,
+                "method": "GET",
+                "timeout": 0,
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                $("#title").val(response[0].title);
+                $("#category").val(response[0].name);
+                $("#releaseyear").val(response[0].release_year);
+                $("#description").val(response[0].description);
+                $("#rating").val(response[0].rating);
+                $("#actors").val(response[0].actors);
+            });
+
+
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+            });
+        })
+
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        #details {
+            background-color: beige;
+            padding: 100px;
+            margin-bottom: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="details">
+        <table>
+            <tr>
+                <td><b>Title:</b></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="title" readonly></td>
+            </tr>
+            <tr>
+                <td><b>Category:</b></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="category" readonly></td>
+            </tr>
+            <tr>
+                <td><b>Release Year:</b></td>
+            </tr>
+            <tr>
+                <td><input type="number" id="releaseyear" readonly></td>
+            </tr>
+            <tr>
+                <td><b>Description:</b></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="description" readonly></td>
+            </tr>
+            <tr>
+                <td><b>Rating:</b></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="rating" readonly></td>
+            </tr>
+            <tr>
+                <td><b>Actors:</b></td>
+            </tr>
+            <tr id="Actor">
+            </tr>
+        </table>
+    </form>
+    <span id="span_error"></span>
+</body>
+
+</html>

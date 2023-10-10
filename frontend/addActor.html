@@ -1,0 +1,111 @@
+<!--
+Class: DAAA/FT/1B/04
+Admission Number: P2237871
+Name: Ashley Bai 
+-->
+
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            if (!localStorage["token"]) {
+                alert("Please login!");
+                window.location.href = "login.html";
+            }
+
+            $("#btn_logout").click(function (event) {
+                event.preventDefault();
+                delete localStorage["token"];
+                window.location.href = "login.html";
+            })
+
+            $("#btn_update").click((event) => {
+                event.preventDefault();
+
+                var settings = {
+                    "url": "http://localhost:3000/actor",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Authorization": "Bearer " + localStorage["token"],
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify({
+                        "first_name": $("#firstname").val(),
+                        "last_name": $("#lastname").val()
+                    }),
+
+                };
+
+                $.ajax(settings)
+                    .done(function (response) {
+                        console.log(response);
+                        alert("Actor successfully added.");
+                        window.location.href = "profile.html";
+                    })
+                    .fail((response) => {
+                        $("#span_error").html("Insufficient priviledges, cannot add actor.")
+                    })
+            })
+        })
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family:'Courier New', Courier, monospace;
+        }
+
+        #span_error {
+            font-weight: 800;
+            color: black;
+        }
+
+        #btn_update,
+        input[type=reset] {
+            width: 43%;
+        }
+
+        #btn_logout {
+            width: 85%;
+        }
+
+        select {
+            width: 180px;
+        }
+
+        td {
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <table>
+            <td>First Name:</td>
+            </tr>
+            <tr>
+                <td><input type="text" id="firstname"></td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+            </tr>
+            <tr>
+                <td><input type="text" id="lastname"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" id="btn_update" value="ADD"><input type="RESET"></td>
+            </tr>
+            <tr>
+                <td><button id="btn_logout">LOGOUT</button></td>
+            </tr>
+        </table>
+    </form>
+    <span id="span_error"></span>
+</body>
+
+</html>

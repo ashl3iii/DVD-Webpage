@@ -1,0 +1,63 @@
+<!--
+Class: DAAA/FT/1B/04
+Admission Number: P2237871
+Name: Ashley Bai 
+-->
+
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script>
+        searchResult = JSON.parse(localStorage.getItem("filmSearch"))
+        $(function () {
+            window.onload = (event) => { }
+            for (var i = 0; i < searchResult.length; i++) {
+                $("#titleSearch").append(
+                    "<tr><td><a href='/dvd.html?id=" + searchResult[i].film_id + "'>" + searchResult[i].title + "</a></td></tr>"
+                )
+                $("#releaseYearSearch").append(
+                    "<tr><td>" + searchResult[i].release_year + "</td></tr>"
+                )
+                $("#ratingSearch").append(
+                    "<tr><td>" + searchResult[i].rating + "</td></tr>"
+                )
+            }
+        });
+
+
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2em;
+        }
+
+        #titleSearch {
+            background-color: lightpink;
+        }
+
+        #releaseYearSearch {
+            background-color: lightblue;
+        }
+
+        #ratingSearch {
+            background-color: lightyellow;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="searchResults">
+        <th id="titleSearch">Film Title</th>
+
+        <th id="releaseYearSearch">Release Year</th>
+
+        <th id="ratingSearch">Rating</th>
+    </table>
+</body>
+
+</html>
